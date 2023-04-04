@@ -14,7 +14,6 @@ public class StudentController {
     @Autowired
     private StudentService studentService;
 
-
     @GetMapping("/count")
     public long count() {
         return studentService.count();
