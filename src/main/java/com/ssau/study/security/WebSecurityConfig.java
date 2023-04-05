@@ -21,18 +21,19 @@ public class WebSecurityConfig {
         http.csrf().disable()
             .authorizeHttpRequests(
                 (requests) -> requests
-                        .requestMatchers("/", "/login").permitAll()
-                        .requestMatchers("/api/admin/*").hasRole("ADMIN")
+                        .requestMatchers("/api/auth/**").permitAll()
+                        .requestMatchers("/api/groups/**").hasRole("ADMIN")
+                        .requestMatchers("/api/students/**").hasRole("USER")
                         .anyRequest().authenticated()
-            )
-            .formLogin(
+            ).httpBasic();
+            /*.formLogin(
                 (form) -> form.loginPage("/login.html")
                         .loginProcessingUrl("/login")
                         .defaultSuccessUrl("/index.html")
                         .failureUrl("/login.html?error=true").
                         permitAll()
             )
-        .logout(LogoutConfigurer::permitAll);
+        .logout(LogoutConfigurer::permitAll);*/
         return http.build();
     }
 

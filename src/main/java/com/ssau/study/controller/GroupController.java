@@ -3,7 +3,9 @@ package com.ssau.study.controller;
 import com.ssau.study.dto.GroupDTO;
 import com.ssau.study.dto.StudentDTO;
 import com.ssau.study.service.GroupService;
+import jakarta.annotation.security.RolesAllowed;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -20,6 +22,7 @@ public class GroupController {
         return groupService.count();
     }
 
+    @PreAuthorize("hasAuthority('USER') or hasAuthority('ADMIN')")
     @GetMapping
     public List<GroupDTO> findAll() {
         return groupService.findAllGroups();
@@ -35,6 +38,7 @@ public class GroupController {
         return groupService.findById(id);
     }*/
 
+    @PreAuthorize("hasAuthority('ADMIN')")
     @PostMapping("/create")
     public GroupDTO createGroup(@RequestBody GroupDTO groupDTO) {
         return groupService.createGroup(groupDTO);
